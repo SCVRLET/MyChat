@@ -1,0 +1,155 @@
+@using MyChat.ViewModels;
+
+@model ChatViewModel
+
+<div class="chat">
+    <div class="messages">
+        @foreach (var message in Model.chatView.Messages)
+        {
+            <div class=message>
+                <header>
+                    @message.Name
+                </header>
+                <p>
+                    @message.Text
+                </p>
+                <footer>
+                    @message.Timestamp
+                </footer>
+            </div>
+        }
+    </div>
+
+    <form asp-controller="Home" asp-action="CreateMessage" onsubmit="sendMessage(event)">
+        <input type="hidden" name="chatId" value="@Model.chatView.Id" />
+        <input type="hidden" name="roomName" value="@Model.chatView.Name" />
+        <div class="chats-bottom-pannel">
+            <div class="text-pannel">
+                <textarea name="message" id="text_area">
+
+                </textarea>
+            </div>
+            <div id="buttons-pannel">
+                <svg id="share-button" data-toggle="modal" data-target="#shareIdModal" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
+                    <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+                </svg>
+                <button type="submit" id="send-button">SEND</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Share ChatId -->
+<div class="modal fade" id="shareIdModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">This Chat Id: @Model.chatView.JoinId</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="Home" asp-action="KickUser">
+                    Kick user
+                    @if (Model.chatUserView.Role == 0)
+                    {
+                    <select name="userId">
+                        @foreach (var user in Model.chatView.Users)
+                        {
+                            @if (user.UserId != Model.chatUserView.UserId)
+                            {
+                                <option value="@user.UserId">@user.User.UserName</option>
+                            }
+
+                        }
+                    </select>
+                        <input type="hidden" name="chatId" value="@Model.chatView.Id" />
+                    }
+
+                    <button type="submit" class="btn btn-outline-primary">Kick</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+
+    <script>
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub")
+        .build();
+
+    connection.on("RecieveMessage", function (data) {
+
+        var message = document.createElement("div")
+        message.classList.add("message")
+
+        var header = document.createElement("header")
+        header.appendChild(document.createTextNode(data.name))
+
+        var p = document.createElement("p")
+        p.appendChild(document.createTextNode(data.text))
+
+        var footer = document.createElement("footer")
+        footer.appendChild(document.createTextNode(data.timestamp))
+
+        message.appendChild(header);
+        message.appendChild(p);
+        message.appendChild(footer);
+
+        var body = document.querySelector('.messages')
+        body.append(message);
+    })
+
+    var _connectionId = '';
+
+    var joinRoom = function () {
+        var url = '/Chat/JoinRoom/' + _connectionId + '/@Model.chatView.Name';
+        axios.post(url, null)
+            .then(res => {
+                console.log("Room joined!", res);
+            })
+            .catch(err => {
+                console.err("Failed to join room", res);
+            })
+    }
+
+    connection.start().then(function () {
+        connection.invoke('ConnectionId')
+            .then(function (connectionId) {
+                _connectionId = connectionId
+                joinRoom();
+            })
+    })
+        .catch(function (err) {
+            console.log(err)
+        })
+
+        var form = null;
+
+        var sendMessage = function (event) {
+            event.preventDefault();
+
+            var data = new FormData(event.target);
+
+            document.getElementById("text_area").value = '';
+
+            axios.post('/Chat/SendMessage', data)
+                .then(res => {
+                    console.log("Message sent!")
+                })
+                .catch(err => {
+                    console.log("Failed to send this one")
+                })
+        }
+
+    </script>
+}

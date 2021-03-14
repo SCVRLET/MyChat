@@ -1,0 +1,8 @@
+@model IEnumerable<Chat>
+
+@foreach (var chat in Model)
+{
+    <a type="submit" class="chat-window" asp-controller="Home" asp-action="Chat" asp-route-id="@chat.Id">
+        @chat.Name
+    </a>
+}

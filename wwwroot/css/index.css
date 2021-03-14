@@ -1,0 +1,244 @@
+* {
+    box-sizing: border-box;
+}
+
+.content {
+    overflow: hidden;
+    display: block;
+    margin-left: 150px;
+    margin-right: 150px;
+    height: 770px;
+    background-color: white;
+    box-shadow: 0 0 1px rgba(0,0,0,0.5);
+}
+
+#wrapper {
+    display: flex;
+    height: inherit;
+    width: inherit;
+}
+
+.navbar {
+    background-color: rgba(233, 233, 233, 0.972);
+}
+
+.navbar-brand {
+    color: rgb(7, 147, 228);
+}
+
+.chat-rooms {
+    flex: 0 0 300px;
+    box-sizing: border-box;
+    /* height: inherit;
+    width: 300px; */
+    border-right: solid;
+    border-width: 1px;
+    border-color: rgb(206, 206, 206);
+    overflow: scroll;
+}
+
+    .chat-rooms::-webkit-scrollbar {
+        width: 0px;
+        background-color: red;
+    }
+
+#logout-button {
+    border: solid;
+    border-width: 2px;
+    border-color: rgb(166, 87, 241);
+    color: rgb(166, 87, 241);
+    background-color: inherit;
+}
+
+    #logout-button:active {
+        color: rgba(233, 233, 233, 0.972);
+        background-color: rgb(166, 87, 241);
+        border: none;
+        box-shadow: none;
+    }
+
+    #logout-button:focus {
+        box-shadow: none;
+    }
+
+
+/*** Menu Styles ***/
+#menu {
+    justify-content: flex-end;
+    padding-right: 15px;
+    display: flex;
+    align-items: center;
+}
+
+#menu-toggle {
+    width: 46px;
+    height: 46px;
+    background: #2ea8ee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+    #menu-toggle:hover .bar {
+        width: 25px;
+    }
+
+    #menu-toggle.closeMenu .bar {
+        width: 25px;
+    }
+
+        #menu-toggle.closeMenu .bar:first-child {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        #menu-toggle.closeMenu .bar:nth-child(2) {
+            transform: scale(0);
+        }
+
+        #menu-toggle.closeMenu .bar:last-child {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+.bar {
+    width: 25px;
+    height: 2px;
+    background: #fff;
+    transition: 0.15s ease-in-out;
+}
+
+    .bar:nth-child(2) {
+        width: 20px;
+        margin: 5px 0;
+    }
+
+    .bar:last-child {
+        width: 15px;
+    }
+
+.dropdown-item:active {
+    background-color: rgb(7, 147, 228);
+}
+
+    .dropdown-item > svg {
+    margin-right: 10px;
+    }
+
+.chat {
+    flex: 0 0 1016px;
+}
+
+.messages {
+    height: 600px;
+    width: inherit;
+    overflow-y: scroll;
+}
+
+.chats-bottom-pannel {
+    height: 60px;
+    width: inherit;
+}
+
+.text-pannel {
+    margin-left: auto;
+    margin-right: auto;
+    height: inherit;
+    width: 600px;
+    /* box-shadow: 0 0 1px rgba(0,0,0,0.5); */
+}
+
+#text_area {
+    outline-color: rgb(166, 87, 241);
+    border: none;
+    width: inherit;
+    display: inline-block;
+    overflow: auto;
+    padding: 5px;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+    border-top: 1px solid rgba(0,0,0,0.5);
+    color: #000000;
+    resize: none;
+    max-height: inherit;
+}
+
+    /* полоса прокрутки (скроллбар) */
+    #text_area::-webkit-scrollbar {
+        width: 0px;
+        background-color: white;
+    }
+
+#buttons-pannel {
+    width: inherit;
+    height: 100px;
+}
+
+.chat-window {
+    width: 300px;
+    height: 80px;
+    text-align: center;
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: rgb(206, 206, 206);
+
+}
+
+.messages::-webkit-scrollbar {
+    width: 7px;
+    background-color: white;
+    /*background-color: white; */
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background: #185899;
+}
+
+#send-button {
+    float: right;
+    margin-right: 220px;
+    margin-top: 5px;
+    cursor: pointer;
+    border: none;
+    background-color: inherit;
+    color: rgb(7, 147, 228);
+}
+
+    #send-button:hover {
+        color: #185899;
+    }
+
+.message {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.5rem;
+}
+
+    .message > * {
+        padding: 0.2em;
+    }
+
+    .message > header {
+        width: 120px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 15px;
+        margin-right: 15px;
+    }
+
+    .message > p {
+        flex-grow: 4;
+        text-align: left;
+        max-width: 700px;
+    }
+
+    .message > footer {
+        flex-grow: 1;
+        text-align: center;
+        width: 10px;
+    }
+
+    #share-button {
+    margin-top: 8px;
+    margin-left: 210px;
+    cursor: pointer;
+    }

@@ -1,0 +1,64 @@
+@{Layout = null;}
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+
+<link rel="stylesheet" href="~/css/login.css" />
+<form id="login-form" asp-controller="Account" asp-action="Login" method="post">
+    <div id="name-and-logo">
+        Hey, chat!<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-chat-left" viewBox="0 0 16 16" style="margin-left: 4px;">
+            <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+        </svg>
+    </div>
+    <div id="forms">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Nickname</label>
+            <input name="nickname" class="form-control" id="exampleInputEmail1" placeholder="Enter nickname">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input name="password" type="password" class="form-control" placeholder="Password">
+        </div>
+        <p class="remember-me">
+            <input type="checkbox"> Remember me
+            <!-- Button trigger modal -->
+            <a id="registration-button" data-toggle="modal" data-target="#registration-modal" style="cursor: pointer; color: rgb(7, 147, 228)">
+                Registration
+            </a>
+        </p>
+        <button id="login-button" type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+<!-- Modal -->
+<div class="modal fade" id="registration-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Registration</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-controller="Account" asp-action="Register" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nickname</label>
+                        <input name="nickname" class="form-control" aria-describedby="emailHelp" placeholder="Enter nickname">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="register-button" type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 
